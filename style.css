@@ -1,0 +1,12 @@
+body{
+  text-align: center;
+}
+div{
+  margin: 0 auto;
+  border: 3px solid green;
+  padding: 10px;
+}
+input{
+  margin: 5px;
+  vertical-align: middle;
+}
