@@ -87,12 +87,30 @@ drawing.addEventListener('click', () => {
 	foreground = selectedColor.value;
 });
 
+let brushsize = document.getElementById('brush') as HTMLInputElement;
+brushsize.value = '1';
+let brushValue = brushsize.value;
+
+brushsize.addEventListener('change', () => {
+	brushValue = brushsize.value;
+});
+
 canvas.addEventListener('click', (e) => {
 	const x = e.offsetX;
 	const y = e.offsetY;
 	const col = Math.floor(x / cellSize);
 	const row = Math.floor(y / cellSize);
-	cellColor[col][row] = foreground;
+
+	if (brushValue === '1') {
+		cellColor[col][row] = foreground;
+	} else {
+		let brushNum = parseInt(brushValue);
+		for (let i = 0; i < brushNum; i++) {
+			for (let j = 0; j < brushNum; j++) {
+				cellColor[col + i][row + j] = foreground;
+			}
+		}
+	}
 	renderGrid();
 });
 
@@ -112,19 +130,25 @@ res_dropdown.addEventListener('change', () => {
 		case '1':
 			cellSize = width / 8;
 			res = 1;
-		break;
+			break;
 		case '2':
 			cellSize = width / 16;
 			res = 2;
-		break;
+			break;
 		case '3':
 			cellSize = width / 32;
 			res = 3;
-		break;
+			break;
 		case '4':
 			cellSize = width / 64;
 			res = 4;
-		break;
+			break;
+		case '5':
+			cellSize = width / 128;
+			res = 5;
+			break;
+		default:
+			throw new Error('Invalid resolution');
 	}
 	numRow = Math.floor(width / cellSize);
 	numCol = Math.floor(height / cellSize);
@@ -144,7 +168,16 @@ canvas.addEventListener('mousemove', (e) => {
 	const col = Math.floor(x / cellSize);
 	const row = Math.floor(y / cellSize);
 	if (e.buttons === 1) {
-		cellColor[col][row] = foreground;
+		if (brushValue === '1') {
+			cellColor[col][row] = foreground;
+		} else {
+			let brushNum = parseInt(brushValue);
+			for (let i = 0; i < brushNum; i++) {
+				for (let j = 0; j < brushNum; j++) {
+					cellColor[col + i][row + j] = foreground;
+				}
+			}
+		}
 	}
 	renderGrid();
 });

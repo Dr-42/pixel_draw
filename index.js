@@ -70,12 +70,28 @@ clearing.addEventListener('click', function () {
 drawing.addEventListener('click', function () {
     foreground = selectedColor.value;
 });
+var brushsize = document.getElementById('brush');
+brushsize.value = '1';
+var brushValue = brushsize.value;
+brushsize.addEventListener('change', function () {
+    brushValue = brushsize.value;
+});
 canvas.addEventListener('click', function (e) {
     var x = e.offsetX;
     var y = e.offsetY;
     var col = Math.floor(x / cellSize);
     var row = Math.floor(y / cellSize);
-    cellColor[col][row] = foreground;
+    if (brushValue === '1') {
+        cellColor[col][row] = foreground;
+    }
+    else {
+        var brushNum = parseInt(brushValue);
+        for (var i = 0; i < brushNum; i++) {
+            for (var j = 0; j < brushNum; j++) {
+                cellColor[col + i][row + j] = foreground;
+            }
+        }
+    }
     renderGrid();
 });
 document.addEventListener('keydown', function (e) {
@@ -106,6 +122,12 @@ res_dropdown.addEventListener('change', function () {
             cellSize = width / 64;
             res = 4;
             break;
+        case '5':
+            cellSize = width / 128;
+            res = 5;
+            break;
+        default:
+            throw new Error('Invalid resolution');
     }
     numRow = Math.floor(width / cellSize);
     numCol = Math.floor(height / cellSize);
@@ -124,7 +146,17 @@ canvas.addEventListener('mousemove', function (e) {
     var col = Math.floor(x / cellSize);
     var row = Math.floor(y / cellSize);
     if (e.buttons === 1) {
-        cellColor[col][row] = foreground;
+        if (brushValue === '1') {
+            cellColor[col][row] = foreground;
+        }
+        else {
+            var brushNum = parseInt(brushValue);
+            for (var i = 0; i < brushNum; i++) {
+                for (var j = 0; j < brushNum; j++) {
+                    cellColor[col + i][row + j] = foreground;
+                }
+            }
+        }
     }
     renderGrid();
 });
