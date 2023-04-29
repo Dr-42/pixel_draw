@@ -105,9 +105,11 @@ canvas.addEventListener('click', (e) => {
 		cellColor[col][row] = foreground;
 	} else {
 		let brushNum = parseInt(brushValue);
-		for (let i = 0; i < brushNum; i++) {
-			for (let j = 0; j < brushNum; j++) {
-				cellColor[col + i][row + j] = foreground;
+		for (let i = -brushNum; i < brushNum; i++) {
+			for (let j = -brushNum; j < brushNum; j++) {
+				if (col + i >= 0 && col + i < numRow && row + j >= 0 && row + j < numCol) {
+					cellColor[col + i][row + j] = foreground;
+				}
 			}
 		}
 	}
@@ -172,9 +174,11 @@ canvas.addEventListener('mousemove', (e) => {
 			cellColor[col][row] = foreground;
 		} else {
 			let brushNum = parseInt(brushValue);
-			for (let i = 0; i < brushNum; i++) {
-				for (let j = 0; j < brushNum; j++) {
-					cellColor[col + i][row + j] = foreground;
+			for (let i = -brushNum; i < brushNum; i++) {
+				for (let j = -brushNum; j < brushNum; j++) {
+					if (col + i >= 0 && col + i < numRow && row + j >= 0 && row + j < numCol) {
+						cellColor[col + i][row + j] = foreground;
+					}
 				}
 			}
 		}

@@ -86,9 +86,11 @@ canvas.addEventListener('click', function (e) {
     }
     else {
         var brushNum = parseInt(brushValue);
-        for (var i = 0; i < brushNum; i++) {
-            for (var j = 0; j < brushNum; j++) {
-                cellColor[col + i][row + j] = foreground;
+        for (var i = -brushNum; i < brushNum; i++) {
+            for (var j = -brushNum; j < brushNum; j++) {
+                if (col + i >= 0 && col + i < numRow && row + j >= 0 && row + j < numCol) {
+                    cellColor[col + i][row + j] = foreground;
+                }
             }
         }
     }
@@ -151,9 +153,11 @@ canvas.addEventListener('mousemove', function (e) {
         }
         else {
             var brushNum = parseInt(brushValue);
-            for (var i = 0; i < brushNum; i++) {
-                for (var j = 0; j < brushNum; j++) {
-                    cellColor[col + i][row + j] = foreground;
+            for (var i = -brushNum; i < brushNum; i++) {
+                for (var j = -brushNum; j < brushNum; j++) {
+                    if (col + i >= 0 && col + i < numRow && row + j >= 0 && row + j < numCol) {
+                        cellColor[col + i][row + j] = foreground;
+                    }
                 }
             }
         }
