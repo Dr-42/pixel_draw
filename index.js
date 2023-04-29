@@ -1,3 +1,4 @@
+"use strict";
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var dim = Math.min(window.innerHeight, window.innerWidth) - 200;
@@ -44,7 +45,7 @@ function renderGrid() {
 }
 var channel = document.getElementById('channel');
 channel.value = '1';
-var channelValue = channel.value;
+var channelValue = parseInt(channel.value);
 var colors = [];
 var selectedColor = document.getElementById('color');
 selectedColor.value = '#3355aa';
@@ -52,7 +53,7 @@ var foreground = selectedColor.value;
 var clearing = document.getElementById('clear');
 var drawing = document.getElementById('draw');
 channel.addEventListener('change', function () {
-    channelValue = channel.value;
+    channelValue = parseInt(channel.value);
     if (colors[channelValue] === undefined) {
         colors[channelValue] = '#3355aa';
     }
@@ -61,7 +62,7 @@ channel.addEventListener('change', function () {
 });
 selectedColor.addEventListener('change', function () {
     foreground = selectedColor.value;
-    channelValue = channel.value;
+    channelValue = parseInt(channel.value);
     colors[channelValue] = foreground;
 });
 clearing.addEventListener('click', function () {

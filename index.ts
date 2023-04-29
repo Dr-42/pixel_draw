@@ -1,5 +1,5 @@
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
 let dim = Math.min(window.innerHeight, window.innerWidth) - 200;
 let height = dim;
@@ -53,7 +53,7 @@ function renderGrid() {
 
 let channel = document.getElementById('channel') as HTMLInputElement;
 channel.value = '1';
-let channelValue = channel.value;
+let channelValue: number = parseInt(channel.value);
 
 let colors: Array<string> = [];
 
@@ -65,7 +65,7 @@ let clearing = document.getElementById('clear') as HTMLButtonElement;
 let drawing = document.getElementById('draw') as HTMLButtonElement;
 
 channel.addEventListener('change', () => {
-	channelValue = channel.value;
+	channelValue = parseInt(channel.value);
 	if (colors[channelValue] === undefined) {
 		colors[channelValue] = '#3355aa';
 	}
@@ -75,7 +75,7 @@ channel.addEventListener('change', () => {
 
 selectedColor.addEventListener('change', () => {
 	foreground = selectedColor.value;
-	channelValue = channel.value;
+	channelValue = parseInt(channel.value);
 	colors[channelValue] = foreground;
 });
 
@@ -200,10 +200,10 @@ save.addEventListener('click', () => {
 			}
 		}
 	}
-	let canv = document.createElement('canvas');
+	let canv = document.createElement('canvas') as HTMLCanvasElement;
 	canv.width = numRow;
 	canv.height = numCol;
-	let ct = canv.getContext('2d');
+	let ct = canv.getContext('2d') as CanvasRenderingContext2D;
 	let imgData = ct.getImageData(0, 0, width, height);
 	for (let i = 0; i < numRow; i++) {
 		for (let j = 0; j < numCol; j++) {

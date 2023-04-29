@@ -9,6 +9,7 @@
   "author": "Spandan Roy",
   "license": "MIT",
   "dependencies": {
+    "localhost": "^0.4.1",
     "typescript": "^5.0.4"
   }
 }
