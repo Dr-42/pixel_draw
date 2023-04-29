@@ -1,7 +1,8 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
-var height = window.innerHeight - 200;
-var width = height;
+var dim = Math.min(window.innerHeight, window.innerWidth) - 200;
+var height = dim;
+var width = dim;
 canvas.width = width;
 canvas.height = height;
 var res_dropdown = document.getElementById('res');
@@ -26,10 +27,12 @@ function renderGrid() {
         for (var j = 0; j < numCol; j++) {
             if (cellColor[i][j] === empty) {
                 if ((i + j) % 2 === 0) {
-                    cellColor[i][j] = checkerLight;
+                    ctx.fillStyle = checkerLight;
+                    ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
                 }
                 else {
-                    cellColor[i][j] = checkerDark;
+                    ctx.fillStyle = checkerDark;
+                    ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
                 }
             }
             else {
@@ -74,7 +77,6 @@ canvas.addEventListener('click', function (e) {
     var row = Math.floor(y / cellSize);
     cellColor[col][row] = foreground;
     renderGrid();
-    renderGrid();
 });
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
@@ -83,7 +85,6 @@ document.addEventListener('keydown', function (e) {
                 cellColor[i][j] = empty;
             }
         }
-        renderGrid();
         renderGrid();
     }
 });
@@ -116,7 +117,6 @@ res_dropdown.addEventListener('change', function () {
         }
     }
     renderGrid();
-    renderGrid();
 });
 canvas.addEventListener('mousemove', function (e) {
     var x = e.offsetX;
@@ -126,7 +126,6 @@ canvas.addEventListener('mousemove', function (e) {
     if (e.buttons === 1) {
         cellColor[col][row] = foreground;
     }
-    renderGrid();
     renderGrid();
 });
 var save = document.getElementById('save');
@@ -171,5 +170,4 @@ save.addEventListener('click', function () {
     link.href = canv.toDataURL();
     link.click();
 });
-renderGrid();
 renderGrid();

@@ -1,8 +1,9 @@
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-let height = window.innerHeight - 200;
-let width = height;
+let dim = Math.min(window.innerHeight, window.innerWidth) - 200;
+let height = dim;
+let width = dim;
 
 canvas.width = width;
 canvas.height = height;
@@ -36,9 +37,11 @@ function renderGrid() {
 		for (let j = 0; j < numCol; j++) {
 			if (cellColor[i][j] === empty) {
 				if ((i + j) % 2 === 0) {
-					cellColor[i][j] = checkerLight;
+					ctx.fillStyle = checkerLight;
+					ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
 				} else {
-					cellColor[i][j] = checkerDark;
+					ctx.fillStyle = checkerDark;
+					ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
 				}
 			} else {
 				ctx.fillStyle = cellColor[i][j];
@@ -91,7 +94,6 @@ canvas.addEventListener('click', (e) => {
 	const row = Math.floor(y / cellSize);
 	cellColor[col][row] = foreground;
 	renderGrid();
-	renderGrid();
 });
 
 document.addEventListener('keydown', (e) => {
@@ -101,7 +103,6 @@ document.addEventListener('keydown', (e) => {
 				cellColor[i][j] = empty;
 			}
 		}
-		renderGrid();
 		renderGrid();
 	}
 });
@@ -135,7 +136,6 @@ res_dropdown.addEventListener('change', () => {
 		}
 	}
 	renderGrid();
-	renderGrid();
 });
 
 canvas.addEventListener('mousemove', (e) => {
@@ -146,7 +146,6 @@ canvas.addEventListener('mousemove', (e) => {
 	if (e.buttons === 1) {
 		cellColor[col][row] = foreground;
 	}
-	renderGrid();
 	renderGrid();
 });
 
@@ -192,5 +191,4 @@ save.addEventListener('click', () => {
 	link.href = canv.toDataURL();
 	link.click();
 });
-renderGrid();
 renderGrid();
